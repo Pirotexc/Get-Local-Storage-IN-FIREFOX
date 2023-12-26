@@ -1,0 +1,31 @@
+// Content script to run on https://haxball.com/
+
+// Define key-value pairs to add to local storage
+var keyValuePairs = {
+  "LN01BHjs1vUW5kkWjdJl4-r-jJUVt874_PpHrhTo0MA": '{"games":1,"wins":1,"winrate":"100.0%","playtime":180,"goals":0,"assists":0,"CS":0,"ownGoals":0}',
+  // Add more key-value pairs as needed
+};
+
+// Check if localStorage is supported in Firefox
+var isLocalStorageSupported = (function () {
+  try {
+    var testKey = "__test__";
+    localStorage.setItem(testKey, testKey);
+    localStorage.removeItem(testKey);
+    return true;
+  } catch (e) {
+    return false;
+  }
+})();
+
+if (isLocalStorageSupported) {
+  // Add key-value pairs to local storage
+  for (var key in keyValuePairs) {
+    if (keyValuePairs.hasOwnProperty(key)) {
+      localStorage.setItem(key, keyValuePairs[key]);
+    }
+  }
+  console.log('Key-value pairs added successfully.');
+} else {
+  console.error('Local storage is not supported.');
+}
